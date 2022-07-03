@@ -9,4 +9,5 @@ After that it would be possible to implement rollback as well with its Godot plu
 
 ### TODOS
 - [ ] Change Nakama connection to use godot-nakama plugin
+  - [ ] check after this if nakama matchmaking can be made faster 
 - [ ] Use Control nodes to react properly to changing resolutions
