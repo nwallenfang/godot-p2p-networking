@@ -19,7 +19,6 @@ func connect_to_nakama() -> void:
 #	else:
 	var device_id = str(1234657989132)
 	
-	print(device_id)
 	
 	nakama_session = yield(nakama_client.authenticate_device_async(device_id, "Example" + device_id), 'completed')
 	if nakama_session.is_exception():
@@ -102,13 +101,16 @@ func _on_OnlineMatch_match_ready(players: Dictionary) -> void:
 	if get_tree().is_network_server():
 		rpc("start_game")
 
+var GAME_SCENE = preload("res://game/Game.tscn")
 remotesync func start_game() -> void:
 	print ("The host told me it's time to start the game!")
 	var my_id = get_tree().get_network_unique_id()
-	var other_peer_id = get_tree().get_network_connected_peers()[0]
+	var _other_peer_id = get_tree().get_network_connected_peers()[0]
 	rpc("say_hello", my_id)
+	var game = GAME_SCENE.instance()
+	get_tree().get_root().add_child(game)
 
 
 remote func say_hello(from_id):
 	# TODO add parameter
-	$Label.text = "Hello from %d :)" % from_id
+	$UI/Info.text = "Hello from %d :)" % from_id
